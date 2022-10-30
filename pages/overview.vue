@@ -161,6 +161,8 @@
 import { mapState } from 'vuex'
 import arcTable from '../arc'
 
+let demoSite = process.env.DEMO
+
 export default {
   head () {
     return {
@@ -205,6 +207,16 @@ export default {
         inputPower += status.active_power
         outputPower += status.loadside_power
       }
+      if (demoSite) {
+        return {
+          counter: 10,
+          vin: 110,
+          vf: 60,
+          pf: 90,
+          pin: 88,
+          pout: 60,
+        }
+      }
       return {
         count: counter,
         vin: counterV_F ? (inputVoltage / counterV_F).toFixed(1) : '---',
@@ -229,6 +241,14 @@ export default {
         inputVoltage += status.control_gear_voltage
         inputPower += status.active_power
         outputPower += status.loadside_power
+      }
+      if (demoSite) {
+        return {
+          counter: 5,
+          vin: 12,
+          pin: 30,
+          pout: 28,
+        }
       }
       return {
         count: counter,
@@ -268,6 +288,9 @@ export default {
   },
   methods: {
     isStatusOn ({ gears = [] }) {
+      if (demoSite) {
+        return Math.random() > 0.5
+      }
       for (let { id } of gears) {
         if (!this.status[id]) continue
         let arc = this.status[id].device_arc
@@ -326,6 +349,23 @@ export default {
         arc += arcTable[status.device_arc]
         energyUsageRate += status.energyUsage / dayMaxPowerUsage
         counter++
+      }
+      if (demoSite) {
+        return {
+          isDC: Math.random() > 0.5,
+          vac: 110,
+          vdc: 12,
+          pin: 88,
+          pout: 80,
+          arc: 4,
+          startCount: 3,
+          onTimeRate: Math.random() * 30,
+          energyUsageRate: Math.random() * 30,
+          powerRate: Math.random() * 30,
+          maxPin: Math.random() * 100,
+          maxPout: Math.random() * 200,
+          error: Math.random() > 0.5,
+        }
       }
       return {
         isDC: vdc > vac,

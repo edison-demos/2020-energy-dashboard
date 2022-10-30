@@ -8,7 +8,7 @@ module.exports = {
 
   ssr: false,
   components: true,
-  mode: 'spa',
+  target: 'static',
 
   axios: {
     proxy: true, // Can be also an object with default options
@@ -25,5 +25,11 @@ module.exports = {
       proxyTimeout: 1000 * 30,
       timeout: 1000 * 30,
     }
+  },
+  router: {
+    base: '/2020-energy-dashboard/'
+  },
+  env: {
+    DEMO: process.env.DEMO,
   }
 }

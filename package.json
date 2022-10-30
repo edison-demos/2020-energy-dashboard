@@ -20,6 +20,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "gh": "touch dist/.nojekyll && gh-pages -d dist -t true",
+    "dev-gh": "DEMO=1 nuxt",
     "dev": "nuxt"
   },
   "author": "",
